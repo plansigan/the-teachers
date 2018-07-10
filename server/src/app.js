@@ -1,7 +1,11 @@
 var express     = require("express"),
     bodyParser  = require("body-parser"),
     cors        = require('cors'),
-    morgan      = require("morgan")
+    morgan      = require("morgan"),
+    mongoose    = require('mongoose');
+
+//MODELS
+var Product = require('../models/Products')
 
 
 const app = express()
@@ -10,6 +14,16 @@ const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
+
+//mongoose db connection
+mongoose.connect('mongodb://localhost:27017/products')
+var db = mongoose.connection
+
+//check if mongoose connection succeeded or not
+db.on("error",console.error.bind(console,"connection error"))
+db.once("open",function(callback){
+    console.log("Connection succeeded")
+})
 
 
 app.get('/',(req,res)=>{

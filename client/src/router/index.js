@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/Main'
-import productsSupplies from '@/components/Products'
+import productsSupplies from '@/components/Supplies'
 import productsFood from '@/components/Foods'
 
 Vue.use(Router)
