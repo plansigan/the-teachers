@@ -15,7 +15,7 @@
 
 <script>
 
-import SuppliesService from '@/services/SuppliesService'
+import SuppliesService from '@/services/ProductService'
 
     export default {
         name:'productsSupplies',
@@ -28,7 +28,7 @@ import SuppliesService from '@/services/SuppliesService'
             this.getSupplies();
         },
         methods:{
-            async getPosts(){
+            async getProducts(){
                 const response = await SuppliesService.fetchSupplies()
                 this.Supplies = response.data
             }
