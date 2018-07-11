@@ -7,12 +7,17 @@ var express     = require("express"),
 //MODELS
 var Product = require('../models/Products')
 
+//ROUTES
+var productRoutes = require('../routes/products')
 
 const app = express()
 
+
+
 //USE APPS
 app.use(morgan('combined'))
-app.use(bodyParser.json())
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 
 //mongoose db connection
@@ -25,6 +30,8 @@ db.once("open",function(callback){
     console.log("Connection succeeded")
 })
 
+//USE ROUTES (always brind this down bodyParser)
+app.use("/products", productRoutes);
 
 app.get('/',(req,res)=>{
     res.send([{
@@ -35,6 +42,6 @@ app.get('/',(req,res)=>{
 
 
 //SERVER START 
-app.listen(process.env.PORT || 3000,function(){
-    console.log(`server has started in ${process.env.PORT || 3000}`)
+app.listen(process.env.PORT || 8081,function(){
+    console.log(`server has started in ${process.env.PORT || 8081}`)
 })

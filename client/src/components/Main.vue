@@ -2,6 +2,7 @@
   <div>
     <a href="#/productsSupplies">Product Supplies</a>
     <a href="#/productsFood">Product Food</a>
+    <a href="#/newProduct">new product</a>
   </div>
 </template>
 

@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import ProductService from '@/services/ProductService'
+let ProductService = require('@/services/ProductService')
+
 export default {
   name: 'NewProduct',
   data () {
@@ -27,12 +28,12 @@ export default {
   },
   methods: {
       addProduct(){
-            ProductService.addProduct({
+            ProductService.default.addProduct({
                 title: this.title,
                 description: this.description
             })
-            this.$router.push({ name: 'Products' })
-            console.log('new product added')
+            //re route to page
+            this.$router.push({ name: 'newProduct' })
       }
   }
 }

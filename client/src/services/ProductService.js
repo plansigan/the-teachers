@@ -1,8 +1,8 @@
-import API from '@/services/API'
+import API from '@/services/API.js'
 
 
 export default {
-    fetchPosts () {
+    fetchProducts () {
         return API().get('product')
     },
     addProduct (params) {
