@@ -30,7 +30,7 @@ db.once("open",function(callback){
     console.log("Connection succeeded")
 })
 
-//USE ROUTES (always brind this down bodyParser)
+//USE ROUTES (always place this below bodyParser)
 app.use("/products", productRoutes);
 
 app.get('/',(req,res)=>{

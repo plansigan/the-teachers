@@ -26,11 +26,8 @@ router.post("/",function(req,res){
 })
 
 
-
-
-
-//READ PRODUCTS
-router.get('/products', (req, res) => {
+//FETCH ALL PRODUCTS
+router.get('/', (req, res) => {
     Product.find({}, 'title description', function (error, products) {
       if (error) { console.error(error); }
       res.send({
