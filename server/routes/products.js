@@ -34,7 +34,8 @@ router.get('/', (req, res) => {
         products: products
       })
     }).sort({_id:-1})
-  })    
+})
+
 
 
 module.exports = router;

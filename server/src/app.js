@@ -9,6 +9,7 @@ var Product = require('../models/Products')
 
 //ROUTES
 var productRoutes = require('../routes/products')
+var productTypeRoutes = require('../routes/productsType')
 
 const app = express()
 
@@ -32,6 +33,7 @@ db.once("open",function(callback){
 
 //USE ROUTES (always place this below bodyParser)
 app.use("/products", productRoutes);
+app.use("/productTypes", productTypeRoutes);
 
 app.get('/',(req,res)=>{
     res.send([{

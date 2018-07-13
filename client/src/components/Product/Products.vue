@@ -6,7 +6,7 @@
         <div class="ui divided items">
             <div v-for="product in products" class="item ">
                 <div class="image">
-                <img src="../img/image.png">
+                <img src="../../img/image.png">
                 </div>
                 <div class="content">
                 <a class="header">{{product.title}}</a>
