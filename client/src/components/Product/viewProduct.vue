@@ -2,6 +2,7 @@
     <div>
         <h1>A product</h1>
         <h2>{{product.title}}</h2>
+        <p>{{product.description}}</p>
         <a class="ui button black" @click="$router.go(-1)">Back</a>
         <a class="ui red button" @click="deleteProduct(product._id)">Delete</a>
     </div>
