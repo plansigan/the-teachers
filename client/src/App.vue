@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="ui container">
-      <router-view /> <!--(:key="$route.fullPath") re-runs mounted functions to views-->
+      <router-view :key="$route.fullPath" /> <!--(:key="$route.fullPath") re-runs mounted functions to views-->
     </div>
   </div>
 </template>

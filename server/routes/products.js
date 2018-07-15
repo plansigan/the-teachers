@@ -11,7 +11,6 @@ router.post("/",function(req,res){
         itemType    = req.body.itemType;
 
     var newProduct = { title, description, itemType}
-    console.log(newProduct)
 
     //create a new product 
     Product.create(newProduct,function (error) {
@@ -28,14 +27,44 @@ router.post("/",function(req,res){
 
 //FETCH ALL PRODUCTS
 router.get('/', (req, res) => {
-    Product.find({}, 'title description', function (error, products) {
-      if (error) { console.error(error); }
-      res.send({
-        products: products
-      })
-    }).sort({_id:-1})
+    Product.aggregate([
+        {
+            $lookup:{
+                    from:"producttypes",
+                    localField:"itemType",
+                    foreignField:"itemType",
+                    as :"itemType"
+                }
+        }
+    ],function (error, products) {
+        if (error) { console.error(error); }
+        res.send({
+          products: products
+        })
+      }).sort({_id:-1})
+})
+
+//VIEW PRODUCT
+router.get('/:id',(req,res)=>{
+    Product.findOne({ 
+        _id: req.params.id
+    },function(err,product){
+        if(err){
+            console.log(err)
+        } else {
+            res.send({
+                product
+            })
+        }
+    })
 })
 
 
+//DELETE PRODUCT
+router.delete('/delete/:id',(req,res)=>{
+    Product.findByIdAndRemove(req.params.id,()=>{
+        res.redirect('#/products');
+    })
+})
 
 module.exports = router;

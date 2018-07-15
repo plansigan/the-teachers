@@ -13,12 +13,16 @@
         <div class="field">
           <label>Item Type</label>
           <select name="type" id="type" placeholder="Item Type" class="ui  search dropdown" v-model="itemType">
-            <option v-for="Type of typeList" v-bind:value="Type.itemType">{{Type.name}}</option>
+            <option v-for="Type in typeList" :key="Type.id" v-bind:value="Type.itemType">{{Type.name}}</option>
           </select>
+          <a href="#/manageProductTypes">manage types</a>
         </div> 
+        <div class="ui hidden divider"></div>
         <div>
           <button class="ui button primary" @click="addProduct">Add</button>
+          <a class="ui button black" @click="$router.go(-1)">Back</a>
         </div>
+        
       </div>
   </div>
 </template>
@@ -56,7 +60,7 @@ export default {
         ProductTypeService.default.fetchTypes().then(
             response => this.typeList = response.data.types
         )
-      },
+      }
   }
 }
 </script>

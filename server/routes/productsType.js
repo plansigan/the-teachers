@@ -24,7 +24,7 @@ router.post("/", function (req, res) {
 })
 
 
-//FETCH ALL PRODUCTS
+//FETCH ALL PRODUCTTYPE
 router.get("/", (req, res) => {
     ProductType.find({}, 'name itemType', function (error, types) {
         if (error) { console.error(error); }
