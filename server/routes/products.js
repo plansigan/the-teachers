@@ -63,7 +63,7 @@ router.get('/:id',(req,res)=>{
 //DELETE PRODUCT
 router.delete('/delete/:id',(req,res)=>{
     Product.findByIdAndRemove(req.params.id,()=>{
-        res.redirect('#/products');
+        res.send('product deleted successfully')
     })
 })
 

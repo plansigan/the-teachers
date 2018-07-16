@@ -35,4 +35,11 @@ router.get("/", (req, res) => {
 })
 
 
+//DELETE PRODUCTTYPE
+router.delete('/delete/:id', (req, res) => {
+    ProductType.findByIdAndRemove(req.params.id, () => {
+        res.send("deleted successfully");
+    })
+})
+
 module.exports = router;

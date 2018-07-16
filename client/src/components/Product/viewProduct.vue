@@ -4,6 +4,7 @@
         <h2>{{product.title}}</h2>
         <p>{{product.description}}</p>
         <a class="ui button black" @click="$router.go(-1)">Back</a>
+        <a class="ui button Yellow">Edit</a>
         <a class="ui red button" @click="deleteProduct(product._id)">Delete</a>
     </div>
 </template>
@@ -26,7 +27,10 @@
         methods:{
             deleteProduct(id){
                 if(confirm('Are you sure you want to delete this product ?')){
-                    ProductService.default.deleteProduct(id)
+                    ProductService.default.deleteProduct(id).then((res)=>{
+                        console.log(res)
+                        this.$router.go(-1)
+                    })
                 }
             }
         }

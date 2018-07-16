@@ -15,14 +15,25 @@
           <select name="type" id="type" placeholder="Item Type" class="ui  search dropdown" v-model="itemType">
             <option v-for="Type in typeList" :key="Type.id" v-bind:value="Type.itemType">{{Type.name}}</option>
           </select>
-          <a href="#/manageProductTypes">manage types</a>
+          <a href="#" @click="manageTypes">manage types</a>
         </div> 
         <div class="ui hidden divider"></div>
+        <p v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="error in errors" :key="error.id">{{ error }}</li>
+          </ul>
+        </p>
         <div>
           <button class="ui button primary" @click="addProduct">Add</button>
           <a class="ui button black" @click="$router.go(-1)">Back</a>
         </div>
-        
+      </div>
+      <div class="ui modal" id="manageTypeModal" ref="manageTypeModal">
+        <i class="close icon"></i>
+        <div class="ui text container">
+          <manage-type></manage-type>
+        </div>
       </div>
   </div>
 </template>
@@ -30,6 +41,7 @@
 <script>
 let ProductService = require('@/services/ProductService')
 let ProductTypeService = require('@/services/ProductTypeService')
+import manageType from '@/components/productType/productTypes.vue'
 import eventBus from '@/eventBus/eventBus'
 
 export default {
@@ -39,11 +51,22 @@ export default {
       title: '',
       description: '',
       itemType:'',
-      typeList:[]
+      typeList:[],
+      errors:[]
     }
+  },
+  components:{
+        'manage-type':manageType
   },
   mounted(){
     this.getType()
+  },
+  created(){
+    eventBus.$on('getTypes',(data)=>{
+      if(data){
+        this.getType()
+      }
+    })
   },
   methods: {
       addProduct(){
@@ -60,6 +83,25 @@ export default {
         ProductTypeService.default.fetchTypes().then(
             response => this.typeList = response.data.types
         )
+      },
+      manageTypes(){
+        $('#manageTypeModal').modal('show')
+      },
+      checkForm:(e)=>{
+        if (this.title && this.description) {
+          return true;
+        }
+        
+        this.errors = [];
+        
+        if (!this.title) {
+          this.errors.push('Name of product required.');
+        }
+        if (!this.description) {
+          this.errors.push('Description required.');
+        }
+        
+        e.preventDefault();
       }
   }
 }
