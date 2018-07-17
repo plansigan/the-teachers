@@ -12,18 +12,19 @@
         </div>
         <div class="field">
           <label>Item Type</label>
-          <select name="type" id="type" placeholder="Item Type" class="ui  search dropdown" v-model="itemType">
-            <option v-for="Type in typeList" :key="Type.id" v-bind:value="Type.itemType">{{Type.name}}</option>
-          </select>
-          <a href="#" @click="manageTypes">manage types</a>
+          <div class="fields">
+            <div class="twelve wide field">
+              <select name="type" id="type" placeholder="Item Type" class="ui  search dropdown" v-model="itemType">
+                <option v-for="Type in typeList" :key="Type.id" v-bind:value="Type.itemType">{{Type.name}}</option>
+              </select>
+            </div>
+            <div class="four wide field">
+              <button class="ui button manage" @click="manageTypes">manage types</button>
+            </div>
+          </div>
+          
         </div> 
         <div class="ui hidden divider"></div>
-        <p v-if="errors.length">
-          <b>Please correct the following error(s):</b>
-          <ul>
-            <li v-for="error in errors" :key="error.id">{{ error }}</li>
-          </ul>
-        </p>
         <div>
           <button class="ui button primary" @click="addProduct">Add</button>
           <a class="ui button black" @click="$router.go(-1)">Back</a>
@@ -106,5 +107,5 @@ export default {
   }
 }
 </script>
-<style type="text/css">
+<style scoped>
 </style>

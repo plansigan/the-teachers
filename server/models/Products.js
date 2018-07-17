@@ -11,6 +11,7 @@ var ProductSchema = new mongoose.Schema({
             ref:"User"
         }
     },
+    image:String,
     dateAdded: { type: Date, default: Date.now }
 })
 

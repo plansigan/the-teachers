@@ -13,5 +13,8 @@ export default {
     },
     deleteProduct(params){
         return API().delete(`products/delete/${params}`)
+    },
+    updateProduct(params,id) {
+        return API().put(`products/update/${id}`, params)
     }
 }

@@ -2,7 +2,7 @@ var express     = require("express"),
     bodyParser  = require("body-parser"),
     cors        = require('cors'),
     morgan      = require("morgan"),
-    mongoose    = require('mongoose');
+    mongoose    = require('mongoose')
 
 //MODELS
 var Product = require('../models/Products')
@@ -19,6 +19,7 @@ const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + "/image"));//to use the files inside public folder
 app.use(cors())
 
 //mongoose db connection

@@ -1,6 +1,7 @@
-var express = require('express'),
-    router  = express.Router(),
-    Product =  require('../models/Products')
+var express =   require('express'),
+    router  =   express.Router(),
+    Product =   require('../models/Products'),
+    fs      =   require('fs')
 
 //CREATE new PRODUCT
 router.post("/",function(req,res){
@@ -8,9 +9,11 @@ router.post("/",function(req,res){
     var db          = req.db,
         title       = req.body.title,
         description = req.body.description,
-        itemType    = req.body.itemType;
+        itemType    = req.body.itemType,
+        Image       = req.body.imagel;
 
-    var newProduct = { title, description, itemType}
+    var newProduct = { title, description, itemType, Image}
+
 
     //create a new product 
     Product.create(newProduct,function (error) {
@@ -21,6 +24,8 @@ router.post("/",function(req,res){
             success: true,
             message: 'Product saved successfully'
         })
+    }).then(img = >{
+        console.log("Saved an image 'jsa-header.png' to MongoDB.")
     })
 })
 
@@ -56,6 +61,32 @@ router.get('/:id',(req,res)=>{
                 product
             })
         }
+    })
+})
+
+//UPDATE PRODUCT
+router.put('/update/:id',(req,res)=>{
+    var db = req.db
+    console.log('hello')
+    Product.findById(req.params.id,'title description itemType',(err,product)=>{
+        if(err){
+            console.log(err)
+
+        }
+
+        product.title = req.body.title
+        product.description = req.body.description
+        product.itemType = req.body.itemType
+
+        product.save((err)=>{
+            if(err){
+                console.log(err)
+            }
+
+            res.send({
+                success:true
+            })
+        })
     })
 })
 
