@@ -2,14 +2,16 @@ var express     = require("express"),
     bodyParser  = require("body-parser"),
     cors        = require('cors'),
     morgan      = require("morgan"),
-    mongoose    = require('mongoose')
+    mongoose    = require('mongoose'),
+    fileUpload = require('express-fileupload')
 
 //MODELS
 var Product = require('../models/Products')
 
 //ROUTES
-var productRoutes = require('../routes/products')
-var productTypeRoutes = require('../routes/productsType')
+var productRoutes       = require('../routes/products'),
+    productTypeRoutes   = require('../routes/productsType'),
+    upload              = require('../routes/upload')
 
 const app = express()
 
@@ -19,7 +21,9 @@ const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname + "/image"));//to use the files inside public folder
+app.use(fileUpload());
+var publicDir = require('path').join(__dirname,'/public');
+app.use(express.static(publicDir));
 app.use(cors())
 
 //mongoose db connection
@@ -35,6 +39,7 @@ db.once("open",function(callback){
 //USE ROUTES (always place this below bodyParser)
 app.use("/products", productRoutes);
 app.use("/productTypes", productTypeRoutes);
+app.use("/upload",upload);
 
 app.get('/',(req,res)=>{
     res.send([{

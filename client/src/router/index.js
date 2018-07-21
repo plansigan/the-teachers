@@ -10,6 +10,9 @@ import viewProduct from '@/components/Product/viewProduct.vue'
 // product type
 import manageProductTypes from '@/components/ProductType/ProductTypes.vue'
 
+//upload (this is usually for debugging the component and not used FOR DISPLAYING)
+import imageUpload from '@/components/ComponentElement/Upload/image.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -38,6 +41,11 @@ export default new Router({
       path: '/manageProductTypes',
       name: 'manageProductTypes',
       component: manageProductTypes
+    },
+    {
+      path: '/imageUpload',
+      name: 'imageUpload',
+      component: imageUpload
     }
   ]
 })

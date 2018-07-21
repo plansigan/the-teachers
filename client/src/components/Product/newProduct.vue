@@ -22,8 +22,9 @@
               <button class="ui button manage" @click="manageTypes">manage types</button>
             </div>
           </div>
-          
-        </div> 
+        </div>
+        <!-- UPLOAD IMAGE -->
+        <image-upload></image-upload>
         <div class="ui hidden divider"></div>
         <div>
           <button class="ui button primary" @click="addProduct">Add</button>
@@ -44,6 +45,7 @@ let ProductService = require('@/services/ProductService')
 let ProductTypeService = require('@/services/ProductTypeService')
 import manageType from '@/components/productType/productTypes.vue'
 import eventBus from '@/eventBus/eventBus'
+import imageUpload from "@/components/ComponentElement/Upload/image.vue"
 
 export default {
   name: 'NewProduct',
@@ -53,11 +55,13 @@ export default {
       description: '',
       itemType:'',
       typeList:[],
-      errors:[]
+      errors:[],
+      image:''
     }
   },
   components:{
-        'manage-type':manageType
+        'manage-type':manageType,
+        'image-upload':imageUpload
   },
   mounted(){
     this.getType()
@@ -68,13 +72,19 @@ export default {
         this.getType()
       }
     })
+    eventBus.$on('imageName',(data)=>{
+      if(data){
+        this.image = data
+      }
+    })
   },
   methods: {
       addProduct(){
             ProductService.default.addProduct({
                 title: this.title,
                 description: this.description,
-                itemType: this.itemType
+                itemType: this.itemType,
+                image:this.image
             })
             //re route to page
             eventBus.$emit('getProducts',true)

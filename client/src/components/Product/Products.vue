@@ -6,7 +6,7 @@
         <div class="ui divided items">
             <div v-for="product in products" :key="product.id" class="item ">
                 <div class="image">
-                <img src="../../img/image.png">
+                <img :src="urlServer+'/uploads/image/'+product.image">
                 </div>
                 <div class="content">
                 <a v-bind:href="'#/viewProduct/'+product._id" class="header" @click="viewProduct(product._id)">{{product.title}}</a>

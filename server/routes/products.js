@@ -1,7 +1,6 @@
 var express =   require('express'),
     router  =   express.Router(),
-    Product =   require('../models/Products'),
-    fs      =   require('fs')
+    Product =   require('../models/Products')
 
 //CREATE new PRODUCT
 router.post("/",function(req,res){
@@ -10,9 +9,9 @@ router.post("/",function(req,res){
         title       = req.body.title,
         description = req.body.description,
         itemType    = req.body.itemType,
-        Image       = req.body.imagel;
-
-    var newProduct = { title, description, itemType, Image}
+        image       = req.body.image;
+    console.log(req.body.image)
+    var newProduct = { title, description, itemType, image}
 
 
     //create a new product 
@@ -24,8 +23,6 @@ router.post("/",function(req,res){
             success: true,
             message: 'Product saved successfully'
         })
-    }).then(img = >{
-        console.log("Saved an image 'jsa-header.png' to MongoDB.")
     })
 })
 
@@ -46,7 +43,7 @@ router.get('/', (req, res) => {
         res.send({
           products: products
         })
-      }).sort({_id:-1})
+      }).sort({dateAdded: -1})
 })
 
 //VIEW PRODUCT

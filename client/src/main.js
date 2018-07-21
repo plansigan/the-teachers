@@ -14,3 +14,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+Vue.prototype.urlServer = 'http://localhost:8081'
