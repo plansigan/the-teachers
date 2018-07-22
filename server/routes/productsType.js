@@ -1,25 +1,33 @@
 var express = require('express'),
     router = express.Router(),
     ProductType = require('../models/ProductTypes');
+    
 
 //CREATE new PRODUCTTYPE
 router.post("/", function (req, res) {
     //console.log(req)
     var db = req.db,
         name = req.body.name,
-        itemType = req.body.itemType;
+        itemType = 1;
 
-    var newProductType = { name, itemType }
+    var newProductType = { name, $inc:{itemType} }
 
     //create a new producttype 
-    ProductType.create(newProductType, function (error) {
-        if (error) {
-            console.log(error)
-        }
+    ProductType.create(newProductType)
+    .then((response)=>{
         res.send({
             success: true,
             message: 'Product type saved successfully'
         })
+    })
+    .catch((error)=>{
+        if (error) {
+            console.log(error.errors.name.message)
+            res.send({
+                success:false,
+                message:error.errors.name.message
+            })
+        }
     })
 })
 

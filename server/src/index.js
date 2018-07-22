@@ -1,9 +1,10 @@
-var express     = require("express"),
-    bodyParser  = require("body-parser"),
-    cors        = require('cors'),
-    morgan      = require("morgan"),
-    mongoose    = require('mongoose'),
-    fileUpload = require('express-fileupload')
+var express         = require("express"),
+    bodyParser      = require("body-parser"),
+    cors            = require('cors'),
+    morgan          = require("morgan"),
+    mongoose        = require('mongoose'),
+    fileUpload      = require('express-fileupload'),
+    global          = require('./GlobalVariables.js')//all global variables
 
 //MODELS
 var Product = require('../models/Products')
@@ -26,8 +27,9 @@ var publicDir = require('path').join(__dirname,'/public');
 app.use(express.static(publicDir));
 app.use(cors())
 
-//mongoose db connection
-mongoose.connect('mongodb://localhost:27017/products')
+
+
+mongoose.connect(global.connection)
 var db = mongoose.connection
 
 //check if mongoose connection succeeded or not

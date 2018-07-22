@@ -26,10 +26,18 @@
         <!-- UPLOAD IMAGE -->
         <image-upload></image-upload>
         <div class="ui hidden divider"></div>
+
+        <!-- SUBMIT FORM -->
+        <div class="ui message red" v-if="errors.length > 0">
+          <ul class="list" >
+            <li v-for="error in errors">{{error}}</li>
+          </ul>
+        </div>
         <div>
           <button class="ui button primary" @click="addProduct">Add</button>
           <a class="ui button black" @click="$router.go(-1)">Back</a>
         </div>
+
       </div>
       <div class="ui modal" id="manageTypeModal" ref="manageTypeModal">
         <i class="close icon"></i>
@@ -80,7 +88,8 @@ export default {
   },
   methods: {
       addProduct(){
-            ProductService.default.addProduct({
+        if(this.checkForm()){
+          ProductService.default.addProduct({
                 title: this.title,
                 description: this.description,
                 itemType: this.itemType,
@@ -89,6 +98,8 @@ export default {
             //re route to page
             eventBus.$emit('getProducts',true)
             this.$router.push({ name: 'products' })
+        }
+            
       },
       getType (){
         ProductTypeService.default.fetchTypes().then(
@@ -98,8 +109,12 @@ export default {
       manageTypes(){
         $('#manageTypeModal').modal('show')
       },
-      checkForm:(e)=>{
-        if (this.title && this.description) {
+      checkForm(){
+        if (this.title 
+        && this.description 
+        && this.itemType
+        && this.image
+            ) {
           return true;
         }
         
@@ -107,12 +122,20 @@ export default {
         
         if (!this.title) {
           this.errors.push('Name of product required.');
+          return false
         }
         if (!this.description) {
           this.errors.push('Description required.');
+          return false
         }
-        
-        e.preventDefault();
+        if (!this.itemType) {
+          this.errors.push('item type required.');
+          return false
+        }
+        if (!this.image) {
+          this.errors.push('image required.');
+          return false
+        }
       }
   }
 }

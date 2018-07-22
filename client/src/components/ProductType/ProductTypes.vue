@@ -55,7 +55,7 @@ export default {
             ProductTypeService.default.addTypes({
                 name: this.typeName,
             }).then((response)=>{
-                //alert(response.data.message)
+                alert(response.data.message)
                 this.getType()
                 eventBus.$emit('getTypes',true)
             })
