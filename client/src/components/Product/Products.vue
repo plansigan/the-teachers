@@ -3,8 +3,19 @@
         <h1>Products</h1>
         <a class="ui primary button" href="#/newProduct">Create new</a>
         <h2>list of all the products</h2>
+        <!-- SEARCH SECTION -->
+        <div class="ui form">
+            <!-- search by name -->
+            <div class="inline field">
+                <div class="ui icon input">
+                    <input v-model="filterName" class="prompt" type="text" placeholder="Search by name...">
+                    <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+            </div>
+        </div>
         <div class="ui divided items">
-            <div v-for="product in products" :key="product.id" class="item ">
+            <div v-for="product in filteredProducts" :key="product.id" class="item ">
                 <div class="image">
                 <img :src="urlServer+'/uploads/image/'+product.image">
                 </div>
@@ -39,7 +50,9 @@
         name:'products',
         data () {
             return {
-                products:[]
+                products:[],
+                filterName:'',
+                searchByType:false
             }
         },
         created(){
@@ -52,6 +65,10 @@
         },
         mounted(){
             this.getProducts()
+            //activate semantic animations
+            $('.ui.checkbox')
+                .checkbox()
+            ;
         },
         methods:{
             getProducts (){
@@ -63,6 +80,13 @@
                 ProductService.default.viewProduct(id).then(
                     response => eventBus.$emit('viewProduct',response.data.product)
                 )
+            }
+        },
+        computed:{
+            filteredProducts() {
+                return this.products.filter(product => {
+                    return product.title.toLowerCase().indexOf(this.filterName.toLowerCase()) > -1
+                })
             }
         }
     }

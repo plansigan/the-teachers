@@ -1,8 +1,14 @@
-var mongoose    = require('mongoose')
+var mongoose    = require('mongoose'),
+    uniqueValidator = require('mongoose-unique-validator'),
+    global = require('../src/GlobalVariables.js')//all global variables
 
 
 var ProductSchema = new mongoose.Schema({
-    title:String,
+    title:{
+        type: String,
+        unique: true,
+        uniqueCaseInsensitive: true
+    },
     description:String,
     itemType: Number,
     author:{
@@ -14,6 +20,13 @@ var ProductSchema = new mongoose.Schema({
     image:String,
     dateAdded: { type: Date, default: Date.now }
 })
+
+
+//unique validator for name field
+ProductSchema.plugin(uniqueValidator, {
+    message: 'expected {VALUE} to be unique.'
+});
+
 
 var Product = mongoose.model("Product",ProductSchema);
 

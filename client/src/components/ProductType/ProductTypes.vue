@@ -1,6 +1,14 @@
 <template>
     <div>
         <div class="ui header">Product Types</div>
+        <!-- search by name -->
+        <div class="inline field searchField">
+            <div class="ui icon input">
+                <input v-model="filterName" class="prompt" type="text" placeholder="Search by name...">
+                <i class="search icon"></i>
+            </div>
+            <div class="results"></div>
+        </div>
         <button class="ui primary button" @click="showAddForm">Toggle Add form</button>
         <div class="ui form" id="showAddForm">
             <h4 class="ui dividing header" style="padding-top:1%">Enter type name</h4>
@@ -10,6 +18,7 @@
             <button class="ui green button" @click="submitType">Create</button>
         </div>
         
+        
         <table class="ui selectable celled table">
             <thead>
                 <tr>
@@ -18,7 +27,7 @@
                 <th style="text-align:center;">Remove</th>
                 </tr>
             </thead>
-            <tbody v-for="typeList in typeLists" :key="typeList._id">
+            <tbody v-for="typeList in filteredProductsType" :key="typeList._id">
                     <td>{{typeList.name}}</td>
                     <td>{{typeList.dateAdded}}</td>  
                     <td style="text-align:center;">
@@ -40,7 +49,8 @@ export default {
             typeLists:[],
             typeName:'',
             showForm:false,
-            showAddTransition:'fade'
+            showAddTransition:'fade',
+            filterName:''
         }
     },
     mounted(){
@@ -78,6 +88,13 @@ export default {
                 .transition('fade')
             ;
         }
+    },
+    computed:{
+        filteredProductsType() {
+            return this.typeLists.filter(type => {
+                return type.name.toLowerCase().indexOf(this.filterName.toLowerCase()) > -1
+            })
+        }
     }
 }
 </script>
@@ -92,5 +109,8 @@ export default {
 
     #showAddForm{
         display:none;
+    }
+    .searchField{
+        margin-bottom:10px;
     }
 </style>

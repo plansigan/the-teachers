@@ -8,8 +8,8 @@
             accept="image/*"
             ref="imageInput"
             >
-            <button :class="{'green': selectedImage,'red':!selectedImage}" class="ui button" @click="$refs.imageInput.click()">Pick an Image</button>
-            <button @click="onUpload" class="ui button green">Upload Image</button>
+            <button :class="{'green': selectedImage,'red':!selectedImage}" class="ui button redBtn" @click="$refs.imageInput.click()">Pick an Image</button>
+            <button @click="onUpload" class="ui button green greenBtn">Upload Image</button>
             <i class="check icon green" v-if="imageUploaded"></i>
     </div>
 </template>
@@ -57,5 +57,13 @@
     .button{
         border-radius:0 !important;
         margin:0;
+    }
+    .redBtn{
+        position: relative;
+        left:1.5px
+    }
+    .greenBtn{
+        position: relative;
+        left:-1.5px
     }
 </style>

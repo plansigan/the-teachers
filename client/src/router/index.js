@@ -13,6 +13,9 @@ import manageProductTypes from '@/components/ProductType/ProductTypes.vue'
 //upload (this is usually for debugging the component and not used FOR DISPLAYING)
 import imageUpload from '@/components/ComponentElement/Upload/image.vue'
 
+//search component
+import search from '@/components/ComponentElement/Search/search.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -42,10 +45,16 @@ export default new Router({
       name: 'manageProductTypes',
       component: manageProductTypes
     },
+    //Component Element
     {
       path: '/imageUpload',
       name: 'imageUpload',
       component: imageUpload
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: search
     }
   ]
 })

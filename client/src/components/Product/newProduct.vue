@@ -30,7 +30,7 @@
         <!-- SUBMIT FORM -->
         <div class="ui message red" v-if="errors.length > 0">
           <ul class="list" >
-            <li v-for="error in errors">{{error}}</li>
+            <li v-for="error in errors" :key="error.id">{{error}}</li>
           </ul>
         </div>
         <div>
@@ -94,10 +94,13 @@ export default {
                 description: this.description,
                 itemType: this.itemType,
                 image:this.image
+            }).then((response)=>{
+                alert(response.data.message)
+                this.getType()
+                eventBus.$emit('getProducts',true)
+                this.$router.push({ name: 'products' })
             })
-            //re route to page
-            eventBus.$emit('getProducts',true)
-            this.$router.push({ name: 'products' })
+            
         }
             
       },

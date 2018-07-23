@@ -10,20 +10,35 @@ router.post("/",function(req,res){
         description = req.body.description,
         itemType    = req.body.itemType,
         image       = req.body.image;
-    console.log(req.body.image)
+
     var newProduct = { title, description, itemType, image}
 
 
     //create a new product 
-    Product.create(newProduct,function (error) {
-        if (error) {
-            console.log(error)
-        }
-        res.send({
-            success: true,
-            message: 'Product saved successfully'
+    // Product.create(newProduct,function (error) {
+    //     if (error) {
+    //         console.log(error)
+    //     }
+    //     res.send({
+    //         success: true,
+    //         message: 'Product saved successfully'
+    //     })
+    // })
+
+    Product.create(newProduct)
+        .then((response)=>{
+            res.send({
+                success: true,
+                message: 'Product saved successfully'
+            })
         })
-    })
+        .catch((error)=>{
+            console.log(error.errors.title.message)
+            res.send({
+                success: false,
+                message: error.errors.title.message
+            })
+        })
 })
 
 
