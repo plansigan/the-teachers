@@ -12,7 +12,7 @@ router.post('/image',(req,res)=>{
     let imageFile = req.files.image
     let imageName = req.files.image.name
 
-    imageFile.mv(`../src/public/uploads/image/${imageName}`,(err)=>{
+    imageFile.mv(`./src/public/uploads/image/${imageName}`,(err)=>{
         if(err){
             return res.status(500).send(err)
         }

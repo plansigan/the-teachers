@@ -15,4 +15,5 @@ new Vue({
   template: '<App/>'
 })
 
-Vue.prototype.urlServer = 'http://localhost:8081'
+Vue.prototype.urlServer = 'http://localhost:8081'// dev
+//Vue.prototype.urlServer = 'https://the-teacher.herokuapp.com'// prod
