@@ -22,6 +22,15 @@
               <button class="ui button manage" @click="manageTypes">manage types</button>
             </div>
           </div>
+          <div class="fields">
+            <div class="twelve wide field">
+              <div class="ui labeled input">
+                <label for="amount" class="ui label">₱</label>
+                <input type="number" placeholder="Amount" id="amount" v-model="price">
+                <!-- <div class="ui basic label"></div> -->
+              </div>
+            </div>
+          </div>
         </div>
         <!-- UPLOAD IMAGE -->
         <image-upload></image-upload>
@@ -64,7 +73,8 @@ export default {
       itemType:'',
       typeList:[],
       errors:[],
-      image:''
+      image:'',
+      price:0,
     }
   },
   components:{
@@ -93,7 +103,8 @@ export default {
                 title: this.title,
                 description: this.description,
                 itemType: this.itemType,
-                image:this.image
+                image:this.image,
+                price:this.price
             }).then((response)=>{
                 alert(response.data.message)
                 this.getType()

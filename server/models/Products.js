@@ -18,6 +18,7 @@ var ProductSchema = new mongoose.Schema({
         }
     },
     image:String,
+    price: Number,
     dateAdded: { type: Date, default: Date.now }
 })
 

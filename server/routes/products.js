@@ -9,9 +9,10 @@ router.post("/",function(req,res){
         title       = req.body.title,
         description = req.body.description,
         itemType    = req.body.itemType,
-        image       = req.body.image;
+        image       = req.body.image,
+        price       = req.body.price
 
-    var newProduct = { title, description, itemType, image}
+    var newProduct = { title, description, itemType, image, price}
 
 
     //create a new product 

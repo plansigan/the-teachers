@@ -4,15 +4,15 @@ var express         = require("express"),
     morgan          = require("morgan"),
     mongoose        = require('mongoose'),
     fileUpload      = require('express-fileupload'),
-    global          = require('./GlobalVariables.js')//all global variables
+    global          = require('./src/GlobalVariables.js')//all global variables
 
 //MODELS
-var Product = require('../models/Products')
+// var Product = require('../models/Products')
 
 //ROUTES
-var productRoutes       = require('../routes/products'),
-    productTypeRoutes   = require('../routes/productsType'),
-    upload              = require('../routes/upload')
+var productRoutes       = require('./routes/products'),
+    productTypeRoutes   = require('./routes/productsType'),
+    upload              = require('./routes/upload')
 
 const app = express()
 
@@ -23,13 +23,15 @@ app.use(morgan('combined'))
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
-var publicDir = require('path').join(__dirname,'/public');
+var publicDir = require('path').join(__dirname,'/src/public');
 app.use(express.static(publicDir));
 app.use(cors())
 
 
 
-mongoose.connect(global.connection)
+mongoose.connect(global.connection,{
+    uri_decode_auth: true 
+})
 var db = mongoose.connection
 
 //check if mongoose connection succeeded or not
