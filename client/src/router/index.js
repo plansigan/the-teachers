@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/Main'
 
+//welcome
+import welcome from '@/components/Welcome.vue'
+
 // product
 import products from '@/components/Product/Products'
 import newProduct from '@/components/Product/newProduct.vue'
@@ -10,51 +13,78 @@ import viewProduct from '@/components/Product/viewProduct.vue'
 // product type
 import manageProductTypes from '@/components/ProductType/ProductTypes.vue'
 
+//orderForm component
+import orderForm from '@/components/OrderForm/OrderForm.vue'
+
 //upload (this is usually for debugging the component and not used FOR DISPLAYING)
 import imageUpload from '@/components/ComponentElement/Upload/image.vue'
 
 //search component
 import search from '@/components/ComponentElement/Search/search.vue'
 
+//sidebar component
+import sideBar from '@/components/ComponentElement/sideBar/sideBar.vue'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path:'/',
+      name:'Welcome',
+      component: welcome
+    },
+    {
+      path: '/Main',
       name: 'Main',
-      component: Main
+      component:Main,
+      children:
+      [
+        {
+        path:'products',
+        component:products
+        },
+        {
+          path:'newProduct',
+          component:newProduct
+        },
+        {
+          path: 'viewProduct/:id',
+          component: viewProduct
+        }
+      ]
     },
     {
-      path: '/products',
-      name: 'products',
-      component: products
-    },
-    {
-      path: '/newProduct',
-      name: 'newProduct',
-      component: newProduct
-    },
-    {
-      path: '/viewProduct/:id',
-      name: 'viewProduct',
-      component: viewProduct
-    },
-    {
-      path: '/manageProductTypes',
-      name: 'manageProductTypes',
-      component: manageProductTypes
-    },
-    //Component Element
-    {
-      path: '/imageUpload',
-      name: 'imageUpload',
-      component: imageUpload
-    },
-    {
-      path: '/search',
-      name: 'search',
-      component: search
+      path:'/orderForm',
+      name:'orderForm',
+      component:orderForm
     }
+    // {
+    //   path: '/newProduct',
+    //   name: 'newProduct',
+    //   components: newProduct,
+    //   sideBar
+    // },
+    // {
+    //   path: '/viewProduct/:id',
+    //   name: 'viewProduct',
+    //   component: viewProduct
+    // },
+    // {
+    //   path: '/manageProductTypes',
+    //   name: 'manageProductTypes',
+    //   component: manageProductTypes
+    // },
+    // //Component Element
+    // {
+    //   path: '/imageUpload',
+    //   name: 'imageUpload',
+    //   component: imageUpload
+    // },
+    // {
+    //   path: '/search',
+    //   name: 'search',
+    //   component: search
+    // }
   ]
 })

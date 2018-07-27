@@ -1,17 +1,21 @@
 <template>
   <div>
-      <h1>Welcome Page</h1>
-      <a href="#/products">Enter</a>
+    <side-bar></side-bar>
+    <router-view/>
   </div>
 </template>
 
 <script>
+import sideBar from '@/components/ComponentElement/sideBar/sidebar.vue'
 export default {
   name: 'WelcomePage',
   data () {
     return {
       msg: 'Welcome to the Main page'
     }
+  },
+  components:{
+    'side-bar':sideBar
   }
 }
 </script>

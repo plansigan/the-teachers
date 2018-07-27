@@ -4,7 +4,6 @@
         <div v-if="editThis==false">
             <h1>{{product.title}}</h1>
             <p>{{product.description}}</p>
-            <a class="ui button black" @click="$router.go(-1)">Back</a>
             <a class="ui button Yellow" @click="editThis = true">Edit</a>
             <a class="ui red button" @click="deleteProduct(product._id)">Delete</a>
         </div>
@@ -30,7 +29,6 @@
                 <a href="#" @click="manageTypes">manage types</a>
                 </div> 
                 <button class="ui button primary" @click="updateProduct(product._id)">Save</button>
-                <a class="ui button black" @click="$router.go(-1)">Back</a>
                 </div>
             </div>
             <div class="ui modal" id="manageTypeModal" ref="manageTypeModal">

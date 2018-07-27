@@ -44,7 +44,6 @@
         </div>
         <div>
           <button class="ui button primary" @click="addProduct">Add</button>
-          <a class="ui button black" @click="$router.go(-1)">Back</a>
         </div>
 
       </div>
@@ -109,7 +108,7 @@ export default {
                 alert(response.data.message)
                 this.getType()
                 eventBus.$emit('getProducts',true)
-                this.$router.push({ name: 'products' })
+                this.$router.push({ path:'products' })
             })
             
         }
@@ -148,6 +147,10 @@ export default {
         }
         if (!this.image) {
           this.errors.push('image required.');
+          return false
+        }
+        if (!this.price) {
+          this.errors.push('price required.');
           return false
         }
       }

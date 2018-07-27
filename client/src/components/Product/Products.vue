@@ -1,8 +1,6 @@
 <template>
     <div class="products">
-        <h1>Products</h1>
-        <a class="ui primary button" href="#/newProduct">Create new</a>
-        <h2>list of all the products</h2>
+        <h1>List of all the products</h1>
         <!-- SEARCH SECTION -->
         <div class="ui form">
             <!-- search by name -->
@@ -20,7 +18,8 @@
                 <img :src="urlServer+'/uploads/image/'+product.image">
                 </div>
                 <div class="content">
-                <a v-bind:href="'#/viewProduct/'+product._id" class="header" @click="viewProduct(product._id)">{{product.title}}</a>
+                <router-link v-bind:to="'/Main/viewProduct/'+product._id" class="header" @click.native="viewProduct(product._id)">{{product.title}}</router-link>
+                <!-- <a v-bind:href="'#/viewProduct/'+product._id" class="header" @click="viewProduct(product._id)">{{product.title}}</a> -->
                 <!-- <div class="meta">
                     <span class="cinema">Union Square 14</span>
                 </div> -->
@@ -35,8 +34,6 @@
             </div>
         </div>
     </div>
-
-    
 </template>
 
 
