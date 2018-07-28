@@ -1,21 +1,39 @@
 <template>
-    <div>
-            <div class="ui very wide sidebar visible inverted vertical menu">
-                <router-link class="item" to="/Main/newProduct">
+    <div>   
+            <div class="ui sidebar inverted vertical menu push">
+                <div class="ui center aligned segment">
+                    <i class="huge users icon"></i>
+                    <h2>Admin</h2>
+                </div>
+                
+                <router-link @click.native="toggleMenu" class="item" to="/Main/newProduct">
                     <i class="plus square outline icon"></i>
                     Create new Product
                 </router-link>
-                <router-link class="item" to="/Main/products">
+                <router-link @click.native="toggleMenu" class="item" to="/Main/products">
                     <i class="th list icon"></i>
                     Product List
                 </router-link>
             </div>
-            <div class="pusher">
-                <!-- Site content !-->
-            </div>
+            <!-- <button @click="toggleModalMessage">click me</button>
+            <div class="ui mini modal">
+                <h1>FUCK YOU</h1>
+            </div> -->
     </div>
 </template>
 
 <script>
-    export default {}
+    export default {
+        methods:{
+            toggleMenu() {
+                $('.ui.sidebar')
+                .sidebar('toggle')
+            },  
+            toggleModalMessage(){
+                $('.mini.modal')
+                    .modal('show')
+                ;
+            }
+        }
+    }
 </script>
