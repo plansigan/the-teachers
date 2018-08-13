@@ -73,7 +73,8 @@ export default new Router({
       path:'/orderForm',
       name:'orderForm',
       component: orderForm
-    }
+    },
+    { path: "*", redirect:'/Home' }
     // {
     //   path: '/newProduct',
     //   name: 'newProduct',
