@@ -1,7 +1,7 @@
 <template>
     <div>
-         <h1>Welcome Page</h1>
-      <a href="#/Home">Enter</a>
+         <h1>Login Page</h1>
+      <a href="#/Main/products">Enter</a>
     </div>
 </template>
 

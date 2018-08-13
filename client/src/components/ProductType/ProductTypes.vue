@@ -77,6 +77,7 @@ export default {
             if(confirm('Are you sure you want to delete this type ?')){
                     ProductTypeService.default.deleteType(id).then((response)=>{
                         console.log(response);
+                        alert(response.data)
                         this.getType()
                         eventBus.$emit('getTypes',true)
                     })

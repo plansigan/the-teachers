@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import Main from '@/components/Main'
 
 //welcome
-import welcome from '@/components/Welcome.vue'
+import Welcome from '@/components/Welcome.vue'
+//login
+import login from '@/components/Login.vue'
 
 // product
 import products from '@/components/Product/Products'
@@ -25,14 +27,22 @@ import search from '@/components/ComponentElement/Search/search.vue'
 //sidebar component
 import sideBar from '@/components/ComponentElement/sideBar/sideBar.vue'
 
+//frontPage components
+import frontMain from '@/components/frontPage/Main.vue'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path:'/',
-      name:'Welcome',
-      component: welcome
+      name:'welcome',
+      component:Welcome
+    },
+    {
+      path:'/login',
+      name:'login',
+      component: login
     },
     {
       path: '/Main',
@@ -55,9 +65,14 @@ export default new Router({
       ]
     },
     {
+      path:'/Home',
+      name:'Home',
+      component: frontMain
+    },
+    {
       path:'/orderForm',
       name:'orderForm',
-      component:orderForm
+      component: orderForm
     }
     // {
     //   path: '/newProduct',

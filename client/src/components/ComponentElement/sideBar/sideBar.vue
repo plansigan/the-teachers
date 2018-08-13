@@ -5,7 +5,6 @@
                     <i class="huge users icon"></i>
                     <h2>Admin</h2>
                 </div>
-                
                 <router-link @click.native="toggleMenu" class="item" to="/Main/newProduct">
                     <i class="plus square outline icon"></i>
                     Create new Product
@@ -15,10 +14,6 @@
                     Product List
                 </router-link>
             </div>
-            <!-- <button @click="toggleModalMessage">click me</button>
-            <div class="ui mini modal">
-                <h1>FUCK YOU</h1>
-            </div> -->
     </div>
 </template>
 

@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express.Router(),
-    ProductType = require('../models/ProductTypes');
+    ProductType = require('../models/ProductTypes'),
+    Product =   require('../models/Products');
     
 
 //CREATE new PRODUCTTYPE
@@ -45,9 +46,56 @@ router.get("/", (req, res) => {
 
 //DELETE PRODUCTTYPE
 router.delete('/delete/:id', (req, res) => {
-    ProductType.findByIdAndRemove(req.params.id, () => {
-        res.send("deleted successfully");
+
+    ProductType.findOne({
+        _id:req.params.id
+    },function(err,productType){
+        if(err){
+            console.log(err)
+        } else {
+            //console.log(productType.itemType)
+            Product.findOne({
+                itemType:productType.itemType
+            },function(err,product){
+                if(err){
+                    console.log(err)
+                } else if (product){
+                    res.send('The product type is being used by a product')
+                } else {
+                     ProductType.findByIdAndRemove(req.params.id, () => {
+                        res.send("deleted successfully");
+                    })
+                }
+            })
+        }
     })
+
+    // Product.findOne({itemType:req.params.id},(err,itemType)=>{
+    //     if(err){
+    //         console.log(err)
+    //     }
+
+    //     if(itemType){
+    //         console.log('existing')
+    //         //res.send('Product Type is being used')
+    //     } else {
+    //         console.log('deleted')
+    //         // ProductType.findByIdAndRemove(req.params.id, () => {
+    //         //     res.send("deleted successfully");
+    //         // })
+    //     }
+    // })
+
+    // ProductType.findOne({
+    //     _id: req.params.id
+    // },(err,product)=>{
+    //     if(err){
+    //         console.log(err)
+    //     }
+    // })
+    // ProductType.findByIdAndRemove(req.params.id, () => {
+    //     res.send("deleted successfully");
+    // })
 })
 
 module.exports = router;
