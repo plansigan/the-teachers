@@ -4,7 +4,15 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
- 
+
+//Adding semantic-ui to the system
+require('semantic-ui-css/semantic.min.css')
+require('semantic-ui-css/semantic.min.js')
+
+//adding jquery to the system
+require('jquery/dist/jquery')
+
+//Use Vuetify
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
