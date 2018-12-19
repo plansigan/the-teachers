@@ -4,20 +4,28 @@
         <!-- search by name -->
         <div class="inline field searchField">
             <div class="ui icon input">
-                <input v-model="filterName" class="prompt" type="text" placeholder="Search by name...">
+                <input v-model="filterType" class="prompt" type="text" placeholder="Search by name...">
                 <i class="search icon"></i>
             </div>
             <div class="results"></div>
         </div>
-        <button class="ui primary button" @click="showAddForm">Toggle Add form</button>
+        <button class="ui primary button" @click="showAddForm">Add New Type</button>
         <div class="ui form" id="showAddForm">
             <h4 class="ui dividing header" style="padding-top:1%">Enter type name</h4>
             <div class="ui field">
-                <input type="text" id="typeName" v-model="typeName" >
+                <input type="text" id="typeName" v-model="newType.name" >
             </div>
-            <button class="ui green button" @click="submitType">Create</button>
+
+            <!-- ERROR MESSAGE -->
+            <div class="ui message red" v-if="error.length > 0">
+                <ul class="list" >
+                    <li>{{error}}</li>
+                </ul>
+            </div>
+
+            <!-- SUBMIT -->
+            <button class="ui green button" @click="addType(newType)">Create</button>
         </div>
-        
         
         <table class="ui selectable celled table">
             <thead>
@@ -27,7 +35,7 @@
                 <th style="text-align:center;">Remove</th>
                 </tr>
             </thead>
-            <tbody v-for="typeList in filteredProductsType" :key="typeList._id">
+            <tbody v-for="typeList in filteredProducts" :key="typeList._id">
                     <td>{{typeList.name}}</td>
                     <td>{{typeList.dateAdded}}</td>  
                     <td style="text-align:center;">
@@ -35,69 +43,52 @@
                     </td>    
             </tbody>
         </table>
-        <!-- <a class="ui button black" @click="$router.go(-1)">Back</a> -->
     </div>
 </template>
 
 
 <script>
-let ProductTypeService = require('@/services/ProductTypeService')
-import eventBus from '@/eventBus/eventBus'
-export default {
-    data(){
-        return {
-            typeLists:[],
-            typeName:'',
-            showForm:false,
-            showAddTransition:'fade',
-            filterName:''
-        }
-    },
-    mounted(){
-        this.getType()
-    },
-    methods:{
-        getType (){
-        ProductTypeService.default.fetchTypes().then(
-            response => this.typeLists = response.data.types
-        )},
-        submitType(){
-            ProductTypeService.default.addTypes({
-                name: this.typeName,
-            }).then((response)=>{
-                alert(response.data.message)
-                this.getType()
-                eventBus.$emit('getTypes',true)
-            })
-            this.typeName = ''
-            //this.$router.go()
-            //this.showForm = false
-        },
-        deleteType(id){
-            if(confirm('Are you sure you want to delete this type ?')){
-                    ProductTypeService.default.deleteType(id).then((response)=>{
-                        console.log(response);
-                        alert(response.data)
-                        this.getType()
-                        eventBus.$emit('getTypes',true)
-                    })
-                    
+
+    let ProductTypeService = require('@/services/ProductTypeService')
+    import {mapActions} from 'vuex'
+
+    export default {
+        data(){
+            return {
+                filterType:'',
+                showForm:false,
+                showAddTransition:'fade'
             }
         },
-        showAddForm(){
-            $('#showAddForm')
-                .transition('fade')
-            ;
-        }
-    },
-    computed:{
-        filteredProductsType() {
-            return this.typeLists.filter(type => {
-                return type.name.toLowerCase().indexOf(this.filterName.toLowerCase()) > -1
-            })
+        created(){
+            this.$store.dispatch('getType')
+        },
+        methods:{
+            showAddForm(){
+                $('#showAddForm').transition('fade');
+            },
+            ...mapActions(['getType','addType','deleteType'])
+        },
+        watch:{
+            filterType:function(name){
+                this.$store.dispatch('filterType',name)
+            }
+        },
+        computed:{
+            newType(){
+                return this.$store.getters.newType
+            },
+            productTypes(){
+                return this.$store.getters.productTypes
+            },
+            filteredProducts(){
+                return this.$store.getters.filteredProducts
+            },
+            error(){
+                return this.$store.getters.error
+            }
         }
     }
-}
 </script>
 
 <style scoped>

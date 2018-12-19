@@ -1,7 +1,7 @@
 <template>
     <div>
          <h1>Login Page</h1>
-      <a href="#/Main/products">Enter</a>
+      <router-link to="Admin/products" tag="a">Enter</router-link>
     </div>
 </template>
 

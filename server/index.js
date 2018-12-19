@@ -47,8 +47,8 @@ app.use("/upload",upload);
 
 app.get('/',(req,res)=>{
     res.send([{
-        title:'hello world',
-        description:'Hi there! How are you?'
+        title:'API is Running',
+        description:"The-Teacher's API is running"
     }])
 })
 

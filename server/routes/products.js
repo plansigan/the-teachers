@@ -14,18 +14,6 @@ router.post("/",function(req,res){
 
     var newProduct = { title, description, itemType, image, price}
 
-
-    //create a new product 
-    // Product.create(newProduct,function (error) {
-    //     if (error) {
-    //         console.log(error)
-    //     }
-    //     res.send({
-    //         success: true,
-    //         message: 'Product saved successfully'
-    //     })
-    // })
-
     Product.create(newProduct)
         .then((response)=>{
             res.send({
@@ -90,6 +78,8 @@ router.put('/update/:id',(req,res)=>{
         product.title = req.body.title
         product.description = req.body.description
         product.itemType = req.body.itemType
+        product.image = req.body.image,
+        product.price = req.body.price
 
         product.save((err)=>{
             if(err){

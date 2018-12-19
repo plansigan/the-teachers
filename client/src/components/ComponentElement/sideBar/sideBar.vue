@@ -5,11 +5,11 @@
                     <i class="huge users icon"></i>
                     <h2>Admin</h2>
                 </div>
-                <router-link @click.native="toggleMenu" class="item" to="/Main/newProduct">
+                <router-link @click.native="toggleMenu" class="item" to="/Admin/newProduct">
                     <i class="plus square outline icon"></i>
                     Create new Product
                 </router-link>
-                <router-link @click.native="toggleMenu" class="item" to="/Main/products">
+                <router-link @click.native="toggleMenu" class="item" to="/Admin/products">
                     <i class="th list icon"></i>
                     Product List
                 </router-link>

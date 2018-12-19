@@ -9,7 +9,7 @@
             ref="imageInput"
             >
             <button :class="{'green': selectedImage,'red':!selectedImage}" class="ui button redBtn" @click="$refs.imageInput.click()">Pick an Image</button>
-            <button @click="onUpload" class="ui button green greenBtn">Upload Image</button>
+            <button :class="{'green': productImage !== '','red':!imageUploaded}" @click="onUpload" class="ui button greenBtn">Upload Image</button>
             <i class="check icon green" v-if="imageUploaded"></i>
     </div>
 </template>
@@ -17,6 +17,8 @@
 <script>
     let UploadService = require('@/services/UploadService')
     import eventBus from '@/eventBus/eventBus'
+
+    import {mapActions} from 'vuex'
     export default {
         data:()=>{
             return {
@@ -25,7 +27,7 @@
             }
         },
         methods:{
-            onImageSelected(event){
+            onImageSelected(event){ 
                  if(event.target.files[0]){
                      this.selectedImage = event.target.files[0]
                  } else {
@@ -38,13 +40,18 @@
                     const fd = new FormData();
                     fd.append('image',this.selectedImage,this.selectedImage.name)
                     UploadService.default.uploadImage(fd).then(uploadProgress => {
-                        alert('Image has been uploaded to server')
+                        this.$store.getters.newProduct.image = this.selectedImage.name
                         this.imageUploaded = true
-                        eventBus.$emit('imageName',this.selectedImage.name)
-                    } )
+                        alert('Image has been uploaded to server')
+                    })
                 } else {
                     alert('no image has been selected')
                 }
+            }
+        },
+        computed:{
+            productImage(){
+                return this.$store.getters.newProduct.image
             }
         }
     }
