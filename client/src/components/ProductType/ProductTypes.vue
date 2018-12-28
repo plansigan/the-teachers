@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="ui header">Product Types</div>
+        <div class="ui header">Manage Product Types</div>
         <!-- search by name -->
         <div class="inline field searchField">
             <div class="ui icon input">
@@ -48,8 +48,6 @@
 
 
 <script>
-
-    let ProductTypeService = require('@/services/ProductTypeService')
     import {mapActions} from 'vuex'
 
     export default {

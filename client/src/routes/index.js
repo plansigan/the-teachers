@@ -13,6 +13,9 @@ import products from '@/components/Product/Products'
 import newProduct from '@/components/Product/newProduct.vue'
 import viewProduct from '@/components/Product/viewProduct.vue'
 
+//site 
+import Site from '@/components/Site/Site.vue'
+
 // orderForm component
 import orderForm from '@/components/OrderForm/OrderForm.vue'
 
@@ -25,13 +28,16 @@ export const routes = [
   {path: '*', redirect: '/Home'},
   {path: '/', name: 'welcome', component: Welcome},
   {path: '/login', name: 'login', component: login},
-  {path: '/Admin',
-    name: 'Admin',
+  {path: '/admin',
+    name: 'admin',
     component: Main,
     children: [
+      // Product
       {path: 'products', component: products},
       {path: 'newProduct', component: newProduct},
-      {path: 'viewProduct/:id', component: viewProduct}
+      {path: 'viewProduct/:id', component: viewProduct},
+      // Site
+      {path: 'Site', component: Site}
     ]
   },
   {path: '/Home', name: 'Home', component: frontMain},

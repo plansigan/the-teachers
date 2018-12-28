@@ -15,16 +15,18 @@
         <div class="ui divided items">
             <div v-for="product in filteredProducts" :key="product.id" class="item ">
                 <div class="image">
-                <img :src="urlServer+'/uploads/image/'+product.image">
+                 <img :src="urlServer+'/uploads/image/'+product.image.name">
                 </div>
                 <div class="content">
-                <router-link v-bind:to="'/Admin/viewProduct/'+product._id" class="header" @click.native="viewProduct(product._id)">{{product.title}}</router-link>
-                <div class="description">
-                    <p>{{product.description}}</p>
-                </div>
-                <div class="extra">
-                    <div class="ui label" v-for="itemType in product.itemType" :key="itemType.id">{{itemType.name}}</div>
-                </div>
+                    <router-link v-bind:to="'/Admin/viewProduct/'+product._id" class="header" @click.native="viewProduct(product._id)">{{product.title}}</router-link>
+                    <div class="description">
+                        <p>{{product.description}}</p>
+                    </div>
+                    <div class="extra">
+                        <!-- <a class="ui teal tag label">Website</a> -->
+                        <div class="ui red label" v-for="site in product.site" :key="site.id">{{site.name}}</div>
+                        <div class="ui black red label" v-for="itemType in product.itemType" :key="itemType.id">{{itemType.name}}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,10 +47,6 @@
         },
         created(){
             this.$store.dispatch('getProducts')
-        },
-        mounted(){
-            this.$store.dispatch('getProducts')
-            $('.ui.checkbox').checkbox();
         },
         methods:{
             ...mapActions(['viewProduct'])

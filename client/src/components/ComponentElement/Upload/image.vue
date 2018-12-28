@@ -8,8 +8,9 @@
             accept="image/*"
             ref="imageInput"
             >
-            <button :class="{'green': selectedImage,'red':!selectedImage}" class="ui button redBtn" @click="$refs.imageInput.click()">Pick an Image</button>
-            <button :class="{'green': productImage !== '','red':!imageUploaded}" @click="onUpload" class="ui button greenBtn">Upload Image</button>
+            <!-- REMIND TO FIX THE CONDITION OF THIS -->
+            <button :class="{'green': selectedImage || selectedImageParent,'red':!selectedImage}" class="ui button redBtn" @click="$refs.imageInput.click()">Pick an Image</button>
+            <button :class="{'green': productImage !== '' || selectedImageParent,'red':!imageUploaded}" @click="onUpload" class="ui button greenBtn">Upload Image</button>
             <i class="check icon green" v-if="imageUploaded"></i>
     </div>
 </template>
@@ -20,6 +21,7 @@
 
     import {mapActions} from 'vuex'
     export default {
+        props:['selectedImageParent'],
         data:()=>{
             return {
                 selectedImage:false,
@@ -38,11 +40,16 @@
             onUpload(){
                 if(this.selectedImage){
                     const fd = new FormData();
+                    const image = {}
+
                     fd.append('image',this.selectedImage,this.selectedImage.name)
                     UploadService.default.uploadImage(fd).then(uploadProgress => {
-                        this.$store.getters.newProduct.image = this.selectedImage.name
+                        image.name = this.selectedImage.name
+                        image.uploaded = true
                         this.imageUploaded = true
                         alert('Image has been uploaded to server')
+                    }).then(()=>{
+                        this.$store.getters.newProduct.image = image;
                     })
                 } else {
                     alert('no image has been selected')

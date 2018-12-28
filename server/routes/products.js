@@ -10,19 +10,20 @@ router.post("/",function(req,res){
         description = req.body.description,
         itemType    = req.body.itemType,
         image       = req.body.image,
-        price       = req.body.price
+        price       = req.body.price,
+        site        = req.body.site
 
-    var newProduct = { title, description, itemType, image, price}
+    var newProduct = { title, description, itemType, image, price,site}
 
     Product.create(newProduct)
-        .then((response)=>{
+        .then(()=>{
             res.send({
                 success: true,
                 message: 'Product saved successfully'
             })
         })
         .catch((error)=>{
-            console.log(error.errors.title.message)
+            console.log(error)
             res.send({
                 success: false,
                 message: error.errors.title.message
@@ -41,13 +42,21 @@ router.get('/', (req, res) => {
                     foreignField:"itemType",
                     as :"itemType"
                 }
+        },
+        {
+            $lookup:{
+                from:"sites",
+                localField:"site",
+                foreignField:"siteNumber",
+                as :"site"
+            }
         }
     ],function (error, products) {
         if (error) { console.error(error); }
         res.send({
           products: products
         })
-      }).sort({dateAdded: -1})
+    }).sort({dateAdded: -1})
 })
 
 //VIEW PRODUCT
@@ -68,7 +77,6 @@ router.get('/:id',(req,res)=>{
 //UPDATE PRODUCT
 router.put('/update/:id',(req,res)=>{
     var db = req.db
-    console.log('hello')
     Product.findById(req.params.id,'title description itemType',(err,product)=>{
         if(err){
             console.log(err)
@@ -79,7 +87,8 @@ router.put('/update/:id',(req,res)=>{
         product.description = req.body.description
         product.itemType = req.body.itemType
         product.image = req.body.image,
-        product.price = req.body.price
+        product.price = req.body.price,
+        product.site = req.body.site
 
         product.save((err)=>{
             if(err){

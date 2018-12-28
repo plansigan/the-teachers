@@ -5,20 +5,29 @@
                     <i class="huge users icon"></i>
                     <h2>Admin</h2>
                 </div>
-                <router-link @click.native="toggleMenu" class="item" to="/Admin/newProduct">
+                <router-link @click.native="toggleMenu" class="item" to="/admin/newProduct">
                     <i class="plus square outline icon"></i>
                     Create new Product
                 </router-link>
-                <router-link @click.native="toggleMenu" class="item" to="/Admin/products">
+                <router-link @click.native="toggleMenu" class="item" to="/admin/products">
                     <i class="th list icon"></i>
                     Product List
                 </router-link>
+                <router-link @click.native="toggleMenu" class="item" to="/admin/Site">
+                    <i class="sitemap icon"></i>
+                    Manage sites
+                </router-link>
             </div>
+            <div></div>
     </div>
 </template>
 
 <script>
+    import Site from '@/components/Site/Site.vue'
     export default {
+        components:{
+            Site
+        },
         methods:{
             toggleMenu() {
                 $('.ui.sidebar')

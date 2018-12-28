@@ -11,6 +11,7 @@
         </div>
         <div class="field" >
           <label>Item Type</label>
+          <!-- itemType -->
           <div class="fields">
             <div class="twelve wide field" :class="errorFilter('itemType')">
               <select name="type" id="type" placeholder="Item Type" class="ui  search dropdown" v-model="product.itemType">
@@ -21,6 +22,16 @@
               <button class="ui button manage" @click="manageType">manage types</button>
             </div>
           </div>
+          <!-- website -->
+          <div class="fields">
+            <div class="twelve wide field" :class="errorFilter('site')">
+              <br>
+              <select name="site" id="site" placeholder="Website" class="ui search dropdown" v-model="product.site">
+                <option v-for="site in sites" :key="site.id" v-bind:value="site.siteNumber">{{site.name}}</option>
+              </select>
+            </div>
+          </div>
+          <!-- Price -->
           <div class="fields">
             <div class="twelve wide field" :class="errorFilter('price')">
               <div class="ui labeled input">
@@ -33,6 +44,7 @@
         </div>
         <!-- UPLOAD IMAGE -->
         <image-upload></image-upload>
+        <!-- <image-upload :selectedImageParent="wow"></image-upload> -->
         <div class="ui hidden divider"></div>
         <button class="ui button primary" @click="submitFunction(product)">Submit</button>
         <!-- ERROR ELEMENTS  -->
@@ -48,30 +60,27 @@
             <manage-type></manage-type>
           </div>
         </div>
-        
       </div>
 </template>
 
 <script>
     // components
     import imageUpload from "@/components/ComponentElement/Upload/image.vue"
-    import manageType from '@/components/productType/productTypes.vue'
+    import manageType from "@/components/productType/productTypes.vue"
 
     //vuex
     import {mapActions} from 'vuex'
 
     export default {
-        props:['title','submitFunction','product'],
+        props:['title','submitFunction','deleteFunction','product'],
         name: 'productForm',
         components:{
             manageType,
             imageUpload
         },    
-        mounted(){
-            this.$store.dispatch('getType')
-        },
         created(){
             this.$store.dispatch('getType')
+            this.$store.dispatch('getSite')
         },
         methods: {
             errorFilter(subject){
@@ -79,7 +88,7 @@
                     return {error:true}
                 }
             },
-            ...mapActions(['getType','manageType'])
+            ...mapActions(['getType','manageType','getSite'])
         },
         computed:{
             errors(){
@@ -87,7 +96,10 @@
             },
             productTypes(){
                 return this.$store.getters.productTypes;
-            } 
+            },
+            sites(){
+              return this.$store.getters.sites;
+            }
         }
     }
 </script>

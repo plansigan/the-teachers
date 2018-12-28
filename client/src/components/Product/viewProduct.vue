@@ -6,6 +6,7 @@
             <p>{{product.description}}</p>
             <a class="ui button Yellow" @click="editThis = true">Edit</a>
             <a class="ui red button" @click="deleteProduct(product._id)">Delete</a>
+            <a class="ui black button" @click="$router.go(-1)">Back</a>
         </div>
         <!-- EDIT FORM -->
         <div v-if="editThis==true"> 
@@ -29,7 +30,7 @@
       productForm
     },
     methods:{
-      ...mapActions(['updateProduct'])
+      ...mapActions(['updateProduct','deleteProduct'])
     },
     computed:{
       product(){

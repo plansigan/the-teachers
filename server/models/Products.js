@@ -17,9 +17,10 @@ var ProductSchema = new mongoose.Schema({
             ref:"User"
         }
     },
-    image:String,
+    image:Object,
     price: Number,
-    dateAdded: { type: Date, default: Date.now }
+    dateAdded: { type: Date, default: Date.now },
+    site:Number
 })
 
 

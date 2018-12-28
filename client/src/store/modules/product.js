@@ -6,6 +6,7 @@ let productFn = {
       && product.description 
       && product.itemType
       && product.image
+      && product.site
           ) {
         return true;
       }
@@ -40,6 +41,12 @@ let productFn = {
           subject:'price'
         });
       }
+      if (!product.site) {
+        state.errors.push({
+          title:'Website required.',
+          subject:'site'
+        });
+      }
       return false
   }
 }
@@ -59,11 +66,12 @@ const mutations = {
             title: newProduct.title,
             description: newProduct.description,
             itemType: newProduct.itemType,
-            image:newProduct.image,
-            price:newProduct.price
+            image:{name:newProduct.image.name,uploaded:newProduct.image.uploaded},
+            price:newProduct.price,
+            site:newProduct.site
         }).then((response)=>{
             alert(response.data.message)
-            window.location.href = '/Admin/products';
+            window.location.href = '/admin/products';
         })
         
     }
@@ -85,11 +93,12 @@ const mutations = {
           title: state.product.title,
           description: state.product.description,
           itemType: state.product.itemType,
-          image:state.product.image,
-          price:state.product.price
+          image:{name:state.product.image.name,uploaded:state.product.image.uploaded},
+          price:state.product.price,
+          site:newProduct.site
       },product._id).then(()=>{
           alert('Product saved successfully')
-          window.location.href = '/Admin/products';
+          window.location.href = '/admin/products';
       })
     }
   },
@@ -97,7 +106,7 @@ const mutations = {
     if(confirm('Are you sure you want to delete this product ?')){
       ProductService.default.deleteProduct(state.product._id).then((res)=>{
           console.log(res)
-          window.location.href = '/Admin/products';
+          window.location.href = '/admin/products';
       });
     }
   }
