@@ -37,6 +37,7 @@ const mutations = {
             }).then(()=>{
                 alert(`${state.newSite.name} has been successfully added`);
                 siteFn.getSite()
+                state.newSite = [{name:"",live:true}]
             }).catch( err => alert('something went wrong with the database.',err))
         }
      },

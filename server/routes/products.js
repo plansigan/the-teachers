@@ -1,9 +1,10 @@
 var express =   require('express'),
     router  =   express.Router(),
-    Product =   require('../models/Products')
+    Product =   require('../models/Products'),
+    middleware = require('../middleware/index.js')
 
 //CREATE new PRODUCT
-router.post("/",function(req,res){
+router.post("/",middleware.isLoggedIn,function(req,res){
     //console.log(req)
     var db          = req.db,
         title       = req.body.title,
@@ -33,7 +34,7 @@ router.post("/",function(req,res){
 
 
 //FETCH ALL PRODUCTS
-router.get('/', (req, res) => {
+router.get('/',middleware.isLoggedIn, (req, res) => {
     Product.aggregate([
         {
             $lookup:{
@@ -60,7 +61,7 @@ router.get('/', (req, res) => {
 })
 
 //VIEW PRODUCT
-router.get('/:id',(req,res)=>{
+router.get('/:id',middleware.isLoggedIn,(req,res)=>{
     Product.findOne({ 
         _id: req.params.id
     },function(err,product){

@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from '@/components/Main'
+import middlewareAuth from '@/middleware/index.js'
 
 // welcome
 import Welcome from '@/components/Welcome.vue'
 
 // login
 import login from '@/components/Login.vue'
+
+//register
+import register from '@/components/register.vue'
 
 // product
 import products from '@/components/Product/Products'
@@ -27,10 +31,18 @@ Vue.use(Router)
 export const routes = [
   {path: '*', redirect: '/Home'},
   {path: '/', name: 'welcome', component: Welcome},
+  {path: '/register', name: 'register', component: register},
   {path: '/login', name: 'login', component: login},
   {path: '/admin',
     name: 'admin',
     component: Main,
+    beforeEnter(to,from,next){
+      if(false){
+        alert('true!')
+      } else {
+        next()
+      }
+    },
     children: [
       // Product
       {path: 'products', component: products},

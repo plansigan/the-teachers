@@ -3,12 +3,14 @@ var express         = require("express"),
     cors            = require('cors'),
     morgan          = require("morgan"),
     mongoose        = require('mongoose'),
+    passport        = require('passport'),
+    Localstrategy   = require("passport-local"),
     fileUpload      = require('express-fileupload'),
     global          = require('./src/GlobalVariables.js'),//all global variables,
-    autoIncrement   = require('mongoose-auto-increment')
+    autoIncrement   = require('mongoose-auto-increment'),
 
-//MODELS
-// var Product = require('../models/Products')
+// USER MODEL
+    User            = require("./models/user.js")
 
 // auto increment initialization
 var connection = mongoose.createConnection(global.connection)
@@ -18,7 +20,8 @@ autoIncrement.initialize(connection);
 var productRoutes       = require('./routes/products'),
     productTypeRoutes   = require('./routes/productsType'),
     upload              = require('./routes/upload'),
-    sites               = require('./routes/sites')
+    sites               = require('./routes/sites'),
+    user                = require('./routes/user')
 
 const app = express()
 
@@ -32,6 +35,18 @@ app.use(fileUpload());
 var publicDir = require('path').join(__dirname,'/src/public');
 app.use(express.static(publicDir));
 app.use(cors())
+
+//PASSPORT CONFIGURATION
+app.use(require('express-session')({
+    secret:"express-session secret message",
+    resave:false,
+    saveUninitialized:false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new Localstrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 
@@ -54,6 +69,7 @@ app.use("/products", productRoutes);
 app.use("/productTypes", productTypeRoutes);
 app.use("/upload",upload);
 app.use("/sites",sites)
+app.use("/user",user)
 
 app.get('/',(req,res)=>{
     res.send([{
