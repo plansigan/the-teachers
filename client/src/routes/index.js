@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Main from '@/components/Main'
-import middlewareAuth from '@/middleware/index.js'
+// import middlewareAuth from '@/middleware/index.js'
 
 // welcome
 import Welcome from '@/components/Welcome.vue'
@@ -26,6 +27,9 @@ import orderForm from '@/components/OrderForm/OrderForm.vue'
 // frontPage components
 import frontMain from '@/components/frontPage/Main.vue'
 
+//store 
+import store from '../store/store'
+
 Vue.use(Router)
 
 export const routes = [
@@ -37,10 +41,10 @@ export const routes = [
     name: 'admin',
     component: Main,
     beforeEnter(to,from,next){
-      if(false){
-        alert('true!')
-      } else {
+      if(store){
         next()
+      } else {
+        next('/login')
       }
     },
     children: [

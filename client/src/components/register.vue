@@ -4,30 +4,41 @@
          <div class="ui form">
             <div class="field">
                 <label>Email</label>
-                <input type="text" name="e-mail" placeholder="Email">
+                <input type="text" name="e-mail" placeholder="Email" v-model="newUser.email">
             </div>
             <div class="field">
                 <label>username</label>
-                <input type="text" name="user-name" placeholder="username">
+                <input type="text" name="user-name" placeholder="username" v-model="newUser.username">
             </div>
             <div class="field">
                 <label>password</label>
-                <input type="password" name="password" placeholder="password">
+                <input type="password" name="password" placeholder="password" v-model="newUser.password">
             </div>
             <div class="field">
-                <div class="ui checkbox">
-                <input type="checkbox" tabindex="0" class="hidden">
-                <label v-model="login.terms">I agree to the Terms and Conditions</label>
+                <div class="ui checked checkbox">
+                    <input type="checkbox" checked="" v-model="newUser.terms">
+                    <label>I agree to the terms and conditions</label>
                 </div>
             </div>
-            <button class="ui teal button" type="submit">Submit</button>
+            <button class="ui teal button" type="submit" @click="registerUser(newUser)">Submit</button>
         </div>
     </div>
 </template>
 
 
 <script>
-    export default {}
+  //vuex
+  import {mapActions} from 'vuex'
+    export default {
+        data(){
+            return{
+                newUser:{}
+            }
+        },
+        methods:{
+             ...mapActions(['registerUser','loginUser'])
+        }
+    }
 </script>
 
 <style scoped>

@@ -4,10 +4,12 @@ var express         = require("express"),
     morgan          = require("morgan"),
     mongoose        = require('mongoose'),
     passport        = require('passport'),
-    Localstrategy   = require("passport-local"),
+    // Localstrategy   = require("passport-local"),
     fileUpload      = require('express-fileupload'),
     global          = require('./src/GlobalVariables.js'),//all global variables,
     autoIncrement   = require('mongoose-auto-increment'),
+    JwtStrategy     = require('passport-jwt').Strategy,
+    ExtractJwt     = require('passport-jwt').ExtractJwt,
 
 // USER MODEL
     User            = require("./models/user.js")
@@ -24,8 +26,6 @@ var productRoutes       = require('./routes/products'),
     user                = require('./routes/user')
 
 const app = express()
-
-
 
 //USE APPS
 app.use(morgan('combined'))
@@ -44,11 +44,22 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new Localstrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-
+var opts = {}
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
+opts.secretOrKey = global.secret;
+passport.use(new JwtStrategy(opts,(jwt_payload,done)=>{
+    //  console.log(jwt_payload);
+    User.getUserById(jwt_payload._id,(err,user)=>{
+        if(err){
+            return done(err,false)
+        }
+        if(user) {
+            return done(null,user)
+        } else {
+            return done(null,false)
+        }
+    })
+}))
 
 mongoose.connect(global.connection,{
     uri_decode_auth: true ,
@@ -61,8 +72,6 @@ db.on("error",console.error.bind(console,"connection error"))
 db.once("open",function(callback){
     console.log("Connection succeeded")
 })
-
-
 
 //USE ROUTES (always place this below bodyParser)
 app.use("/products", productRoutes);
@@ -77,7 +86,6 @@ app.get('/',(req,res)=>{
         description:"The-Teacher's API is running"
     }])
 })
-
 
 //SERVER START 
 app.listen(process.env.PORT || 8081,function(){

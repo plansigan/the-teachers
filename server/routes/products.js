@@ -1,7 +1,8 @@
 var express =   require('express'),
     router  =   express.Router(),
     Product =   require('../models/Products'),
-    middleware = require('../middleware/index.js')
+    middleware = require('../middleware/index.js'),
+    passport    = require('passport')
 
 //CREATE new PRODUCT
 router.post("/",middleware.isLoggedIn,function(req,res){
@@ -34,7 +35,7 @@ router.post("/",middleware.isLoggedIn,function(req,res){
 
 
 //FETCH ALL PRODUCTS
-router.get('/',middleware.isLoggedIn, (req, res) => {
+router.get('/',passport.authenticate('jwt',{session:false}), (req, res) => {
     Product.aggregate([
         {
             $lookup:{
