@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+
 import Main from '@/components/Main'
 // import middlewareAuth from '@/middleware/index.js'
 
@@ -28,34 +29,38 @@ import orderForm from '@/components/OrderForm/OrderForm.vue'
 import frontMain from '@/components/frontPage/Main.vue'
 
 //store 
-import store from '../store/store'
+import store from '@/store/store'
 
 Vue.use(Router)
 
-export const routes = [
-  {path: '*', redirect: '/Home'},
-  {path: '/', name: 'welcome', component: Welcome},
-  {path: '/register', name: 'register', component: register},
-  {path: '/login', name: 'login', component: login},
-  {path: '/admin',
-    name: 'admin',
-    component: Main,
-    beforeEnter(to,from,next){
-      if(store){
-        next()
-      } else {
-        next('/login')
-      }
+export default new Router({
+  mode: 'history',
+   routes : [
+    {path: '*', redirect: '/Home'},
+    {path: '/', name: 'welcome', component: Welcome},
+    {path: '/register', name: 'register', component: register},
+    {path: '/login', name: 'login', component: login},
+    {path: '/admin',
+      name: 'admin',
+      component: Main,
+      beforeEnter(to,from,next){
+        
+        if(store.getters.isAuthenticated){
+          next()
+        } else {
+          next('/login')
+        }
+      },
+      children: [
+        // Product
+        {path: 'products', component: products},
+        {path: 'newProduct', component: newProduct},
+        {path: 'viewProduct/:id', component: viewProduct},
+        // Site
+        {path: 'Site', component: Site}
+      ]
     },
-    children: [
-      // Product
-      {path: 'products', component: products},
-      {path: 'newProduct', component: newProduct},
-      {path: 'viewProduct/:id', component: viewProduct},
-      // Site
-      {path: 'Site', component: Site}
-    ]
-  },
-  {path: '/Home', name: 'Home', component: frontMain},
-  {path: '/orderForm', name: 'orderForm', component: orderForm}
-]
+    {path: '/Home', name: 'Home', component: frontMain},
+    {path: '/orderForm', name: 'orderForm', component: orderForm}
+  ]
+})

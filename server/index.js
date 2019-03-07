@@ -4,7 +4,6 @@ var express         = require("express"),
     morgan          = require("morgan"),
     mongoose        = require('mongoose'),
     passport        = require('passport'),
-    // Localstrategy   = require("passport-local"),
     fileUpload      = require('express-fileupload'),
     global          = require('./src/GlobalVariables.js'),//all global variables,
     autoIncrement   = require('mongoose-auto-increment'),
@@ -48,7 +47,6 @@ var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
 opts.secretOrKey = global.secret;
 passport.use(new JwtStrategy(opts,(jwt_payload,done)=>{
-    //  console.log(jwt_payload);
     User.getUserById(jwt_payload._id,(err,user)=>{
         if(err){
             return done(err,false)

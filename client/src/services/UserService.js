@@ -7,5 +7,8 @@ export default {
     },
     loginUser(params){
         return API().post('user/login',params)
+    },
+    getUser(id){
+        return API().get(`user/getUser/${id}`)
     }
 }

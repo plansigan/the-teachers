@@ -1,6 +1,6 @@
 <template>
     <div class="ui raised very padded text container segment centered">
-         <h1>Register Page</h1>
+         <h1>Register</h1>
          <div class="ui form">
             <div class="field">
                 <label>Email</label>
@@ -20,7 +20,7 @@
                     <label>I agree to the terms and conditions</label>
                 </div>
             </div>
-            <button class="ui teal button" type="submit" @click="registerUser(newUser)">Submit</button>
+            <button class="ui black button" type="submit" @click="registerUser(newUser)">Submit</button>
         </div>
     </div>
 </template>

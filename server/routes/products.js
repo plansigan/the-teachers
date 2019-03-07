@@ -5,7 +5,7 @@ var express =   require('express'),
     passport    = require('passport')
 
 //CREATE new PRODUCT
-router.post("/",middleware.isLoggedIn,function(req,res){
+router.post("/",passport.authenticate('jwt',{session:false}),function(req,res){
     //console.log(req)
     var db          = req.db,
         title       = req.body.title,
@@ -62,7 +62,7 @@ router.get('/',passport.authenticate('jwt',{session:false}), (req, res) => {
 })
 
 //VIEW PRODUCT
-router.get('/:id',middleware.isLoggedIn,(req,res)=>{
+router.get('/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{
     Product.findOne({ 
         _id: req.params.id
     },function(err,product){
@@ -106,7 +106,7 @@ router.put('/update/:id',(req,res)=>{
 
 
 //DELETE PRODUCT
-router.delete('/delete/:id',(req,res)=>{
+router.delete('/delete/:id',passport.authenticate('jwt',{session:false}),(req,res)=>{
     Product.findByIdAndRemove(req.params.id,()=>{
         res.send('product deleted successfully')
     })

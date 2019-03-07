@@ -1,11 +1,11 @@
 var express     = require('express'),
     router      = express.Router(),
     User        = require('../models/user.js'),
-    passport    = require('passport'),
     jwt         = require('jsonwebtoken'),
     global      = require('../src/GlobalVariables.js'),//all global variables,
     bcrypt = require('bcryptjs');
 
+//register
 router.post("/register", function (req, res) {
     var body = req.body,
         email = body.email,
@@ -33,7 +33,7 @@ router.post("/register", function (req, res) {
                             token:'JWT ' + token,
                             user:{
                                 id:userJSON._id,
-                                name:userJSON.username,
+                                username:userJSON.username,
                                 email:userJSON.email,
                                 expiresIn:global.expiresIn
                                 //password:userJSON.password
@@ -96,6 +96,14 @@ router.post('/login',(req,res)=>{
             }
 
         })
+    })
+})
+
+//getUserById
+router.get('/getUser/:id',(req,res)=>{
+    var id = req.params.id;
+    User.findById({_id:id}).then(response=>{
+        res.json(response)
     })
 })
 

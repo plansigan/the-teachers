@@ -3,7 +3,8 @@
             <div class="ui sidebar inverted vertical menu push">
                 <div class="ui center aligned segment">
                     <i class="huge users icon"></i>
-                    <h2>Admin</h2>
+                    <p>Welcome!</p>
+                    <h2>{{username}}</h2>
                 </div>
                 <router-link @click.native="toggleMenu" class="item" to="/admin/newProduct">
                     <i class="plus square outline icon"></i>
@@ -37,6 +38,11 @@
                 $('.mini.modal')
                     .modal('show')
                 ;
+            }
+        },
+        computed:{
+            username(){
+                return this.$store.getters.user.username
             }
         }
     }

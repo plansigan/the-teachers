@@ -1,6 +1,6 @@
 <template>
     <div class="ui raised very padded text container segment centered">
-         <h1>Login Page</h1>
+         <h1>Login</h1>
          <div class="ui form">
             <div class="field">
                 <label>username</label>
@@ -8,9 +8,10 @@
             </div>
             <div class="field">
                 <label>password</label>
-                <input type="text" name="password" placeholder="password" v-model="User.password">
+                <input type="password" name="password" placeholder="password" v-model="User.password">
             </div>
-            <button class="ui teal button" type="submit" @click="loginUser(User)">Submit</button>
+            <button class="ui black button" type="submit" @click="loginUser(User)">Submit</button>
+            <router-link to="/register">register</router-link>
         </div>
     </div>
 </template>

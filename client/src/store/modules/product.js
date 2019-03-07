@@ -69,7 +69,7 @@ const mutations = {
             image:{name:newProduct.image.name,uploaded:newProduct.image.uploaded},
             price:newProduct.price,
             site:newProduct.site
-        }).then((response)=>{
+        },{Authorization:localStorage.getItem('token')}).then((response)=>{
             alert(response.data.message)
             window.location.href = '/admin/products';
         })
@@ -77,12 +77,12 @@ const mutations = {
     }
   },
   'GET_PRODUCTS' (state) {
-    ProductService.default.fetchProducts().then(
+    ProductService.default.fetchProducts({Authorization:localStorage.getItem('token')}).then(
       response => state.products = response.data.products
     )
   },
   'VIEW_PRODUCT' (state,id) {
-    ProductService.default.viewProduct(id).then(
+    ProductService.default.viewProduct(id,{Authorization:localStorage.getItem('token')}).then(
         response => state.product = response.data.product
     )
   },
@@ -104,7 +104,9 @@ const mutations = {
   },
   'DELETE_PRODUCT'(state){
     if(confirm('Are you sure you want to delete this product ?')){
-      ProductService.default.deleteProduct(state.product._id).then((res)=>{
+      ProductService.default.deleteProduct(state.product._id,
+        {Authorization:localStorage.getItem('token')}
+        ).then((res)=>{
           console.log(res)
           window.location.href = '/admin/products';
       });

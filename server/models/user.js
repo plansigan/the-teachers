@@ -1,16 +1,14 @@
-var mongoose = require('mongoose'),
-    passportLocalMongoose = require('passport-local-mongoose'),
+var mongoose = require('mongoose')
     bcrypt = require('bcryptjs');
     
 
 var UserDetails = new mongoose.Schema({
     email:String,
-    username:String,
-    password:String,
+    username:{type:String,require:true,index:true,unique:true,sparse:true},
+    password:{type:String,required:true},
     terms:Boolean
 });
 
-UserDetails.plugin(passportLocalMongoose);
 
 var UserSchema = mongoose.model("User",UserDetails);
 
@@ -30,7 +28,7 @@ module.exports.addUser = function(newUser,callback){
         bcrypt.hash(newUser.password,salt,(err,hash)=>{
             if(err) throw err;
             newUser.password = hash;
-            newUser.save(callback);
+            newUser.createUser(callback);
         });
     });
 };

@@ -1,6 +1,5 @@
 var mongoose    = require('mongoose'),
-    uniqueValidator = require('mongoose-unique-validator'),
-    global = require('../src/GlobalVariables.js')//all global variables
+    uniqueValidator = require('mongoose-unique-validator')
 
 
 var ProductSchema = new mongoose.Schema({
@@ -11,12 +10,12 @@ var ProductSchema = new mongoose.Schema({
     },
     description:String,
     itemType: Number,
-    author:{
-        id:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:"User"
-        }
-    },
+    // author:{
+    //     id:{
+    //         type:mongoose.Schema.Types.ObjectId,
+    //         ref:"User"
+    //     }
+    // },
     image:Object,
     price: Number,
     dateAdded: { type: Date, default: Date.now },

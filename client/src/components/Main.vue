@@ -7,7 +7,7 @@
         <!-- <div class="ui right aligned">
             <h3>Visit Site <i class="globe icon"></i>   </h3>
         </div> -->
-        <a class="ui right aligned item">
+        <a @click="logout()" class="ui right aligned item">
             <h3>Log out <i class="power off icon"></i></h3>
         </a>
     </div>
@@ -26,6 +26,7 @@
 
 <script>
 import sideBar from '@/components/ComponentElement/sideBar/sidebar.vue'
+import {mapActions} from 'vuex'
 export default {
   name: 'WelcomePage',
   data () {
@@ -44,7 +45,8 @@ export default {
       // .sidebar('attach events', '.menu .item');
       $('.ui.sidebar')
         .sidebar('toggle')
-      }
+      },
+      ...mapActions(['logout'])
   }
 }
 </script>

@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 
-//import modules
+// import modules
 import product from './modules/product.js'
 import productType from './modules/productType.js'
 import site from './modules/site.js'

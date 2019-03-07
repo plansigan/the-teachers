@@ -2,17 +2,17 @@ import API from '@/services/API.js'
 
 
 export default {
-    fetchProducts () {
-        return API().get('products')
+    fetchProducts (auth) {
+        return API().get('products',{headers:auth})
     },
-    addProduct (params) {
-        return API().post('products', params)
+    addProduct (params,auth){
+        return API().post('products',params,{headers:auth})
     },
-    viewProduct(params){
-        return API().get(`products/${params}`,params)
+    viewProduct(params,auth){
+        return API().get(`products/${params}`,{headers:auth})
     },
-    deleteProduct(params){
-        return API().delete(`products/delete/${params}`)
+    deleteProduct(params,auth){
+        return API().delete(`products/delete/${params}`,{headers:auth})
     },
     updateProduct(params,id) {
         return API().put(`products/update/${id}`, params)
